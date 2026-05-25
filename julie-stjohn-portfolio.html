@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julie St. John</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #080b10; --bg2: #0d1117; --bg3: #131920;
+    --border: #1e2d3d; --accent: #38bdf8; --accent2: #34d399;
+    --accent3: #fb923c; --gold: #fbbf24; --purple: #a78bfa;
+    --text: #e2eaf4; --muted: #5a7a90; --subtle: #2a3d50;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.65; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(56,189,248,0.012) 3px, rgba(56,189,248,0.012) 4px); pointer-events: none; z-index: 0; }
+  nav { border-bottom: 1px solid var(--border); background: rgba(8,11,16,0.96); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.04em; }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; cursor: pointer; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+  .hero { padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent2); }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 0.5rem; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-title { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.03em; }
+  .hero-title .cursor { display: inline-block; width: 8px; height: 13px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: middle; margin-left: 2px; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .hero-bio { font-size: 14px; color: var(--muted); max-width: 600px; line-height: 1.7; margin-bottom: 2rem; }
+  .hero-stats { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+  .stat-num { font-family: 'JetBrains Mono', monospace; font-size: 1.8rem; font-weight: 600; color: var(--text); }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .exp-item { margin-bottom: 2.5rem; }
+  .exp-item:last-child { margin-bottom: 0; }
+  .exp-header { display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem; }
+  .exp-meta-col { padding-top: 2px; }
+  .exp-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.08em; line-height: 1.6; }
+  .exp-company { font-family: 'JetBrains Mono', monospace; font-size: 11px; margin-top: 4px; letter-spacing: 0.06em; }
+  .exp-company.ford { color: var(--accent); }
+  .exp-company.consulting { color: var(--purple); }
+  .exp-company.other { color: var(--accent2); }
+  .exp-body { border-left: 1px solid var(--border); padding-left: 1.5rem; }
+  .exp-role { font-size: 15px; font-weight: 600; margin-bottom: 0.3rem; }
+  .exp-impact { display: inline-flex; align-items: center; gap: 5px; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2); padding: 2px 8px; border-radius: 2px; margin-bottom: 0.6rem; letter-spacing: 0.05em; }
+  .exp-impact.purple { color: var(--purple); background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.2); }
+  .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  .service-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.75rem; }
+  .pill { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--purple); background: rgba(167,139,250,0.08); border: 1px solid rgba(167,139,250,0.2); padding: 3px 9px; border-radius: 2px; letter-spacing: 0.05em; }
+  .case-studies { margin-top: 1rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .case-card { background: var(--bg2); padding: 1.1rem 1.2rem; position: relative; overflow: hidden; transition: background 0.2s; }
+  .case-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--purple); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .case-card:hover { background: var(--bg3); }
+  .case-card:hover::before { transform: scaleX(1); }
+  .case-client { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--purple); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .case-title { font-size: 13px; font-weight: 600; margin-bottom: 0.4rem; }
+  .case-result { font-size: 12px; color: var(--muted); line-height: 1.55; }
+  .case-badge { display: inline-block; margin-top: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent2); background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); padding: 2px 7px; border-radius: 2px; }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .cert-card { background: var(--bg2); padding: 1.2rem 1.3rem; position: relative; overflow: hidden; transition: background 0.2s; }
+  .cert-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .cert-card:hover { background: var(--bg3); }
+  .cert-card:hover::after { transform: scaleX(1); }
+  .cert-issuer { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.4rem; text-transform: uppercase; }
+  .cert-name { font-size: 13px; font-weight: 600; margin-bottom: 0.3rem; }
+  .cert-status { font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 2px; display: inline-block; }
+  .cert-active { color: var(--accent2); background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); }
+  .cert-progress { color: var(--accent3); background: rgba(251,146,60,0.08); border: 1px solid rgba(251,146,60,0.2); }
+  .cert-expired { color: var(--muted); background: rgba(90,122,144,0.08); border: 1px solid var(--border); }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1.25rem; }
+  .skill-group-name { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.7rem; padding-bottom: 0.4rem; border-bottom: 1px solid var(--border); }
+  .skill-item { font-size: 12px; color: var(--muted); margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; }
+  .skill-item::before { content: '▸'; color: var(--subtle); font-size: 10px; flex-shrink: 0; }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .edu-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 2px; padding: 1.2rem 1.3rem; }
+  .edu-school { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .edu-degree { font-size: 14px; font-weight: 600; margin-bottom: 0.25rem; }
+  .edu-detail { font-size: 12px; color: var(--muted); }
+  .contact-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .contact-btn { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 0.6rem 1.2rem; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; letter-spacing: 0.08em; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; border-radius: 2px; text-decoration: none; }
+  .contact-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,0.04); }
+  .contact-btn.primary { border-color: var(--accent); color: var(--accent); }
+  footer { padding: 1.8rem 0; border-top: 1px solid var(--border); }
+  .footer-inner { max-width: 960px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .uptime { display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,0.4)} 50%{opacity:.8;box-shadow:0 0 0 4px rgba(52,211,153,0)} }
+  .fade-in { opacity:0; transform:translateY(12px); animation:fadeIn 0.45s forwards; }
+  @keyframes fadeIn { to{opacity:1;transform:translateY(0)} }
+  .fade-in:nth-child(1){animation-delay:.05s} .fade-in:nth-child(2){animation-delay:.1s}
+  .fade-in:nth-child(3){animation-delay:.15s} .fade-in:nth-child(4){animation-delay:.2s}
+  .fade-in:nth-child(5){animation-delay:.25s} .fade-in:nth-child(6){animation-delay:.3s}
+  @media (max-width: 600px) {
+    .exp-header { grid-template-columns: 1fr; gap: 0.5rem; }
+    .exp-body { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo"><span>~/</span>julie-st-john</div>
+    <div class="nav-links">
+      <a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">experience</a>
+      <a onclick="document.getElementById('certs').scrollIntoView({behavior:'smooth'})">certifications</a>
+      <a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">skills</a>
+      <a onclick="document.getElementById('education').scrollIntoView({behavior:'smooth'})">education</a>
+      <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">contact</a>
+    </div>
+  </div>
+</nav>
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow">Enterprise Data &amp; AI Leader · Founder · Fortune 500</div>
+    <h1>Julie <span class="accent">St. John</span></h1>
+    <div class="hero-title">Director, Analytics &amp; AI · Ford Motor Company · Founder, P3rsuit<span class="cursor"></span></div>
+    <div class="hero-bio">20+ years architecting scalable, cloud-first data platforms that transform customer, marketing, and operational ecosystems. Corporate executive by day, entrepreneur since 2012 — trusted by General Motors, ExxonMobil, Ford, Google, Microsoft, and more to turn complex data into measurable outcomes.</div>
+    <div class="hero-stats">
+      <div><div class="stat-num">20<span>+</span></div><div class="stat-label">Years experience</div></div>
+      <div><div class="stat-num">$100<span>M</span></div><div class="stat-label">EBIT target led</div></div>
+      <div><div class="stat-num">14<span>yr</span></div><div class="stat-label">Flagship platform lifespan</div></div>
+      <div><div class="stat-num">12<span>+</span></div><div class="stat-label">Years consulting</div></div>
+    </div>
+  </div>
+
+  <section id="experience">
+    <div class="section-header"><span class="section-label">// experience</span><div class="section-line"></div></div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">06/2025 – present</div><div class="exp-company ford">FORD</div></div>
+        <div class="exp-body">
+          <div class="exp-role">Director, FCSD Analytics &amp; AI</div>
+          <div class="exp-impact">★ $100M EBIT target · BCG partnership</div>
+          <div class="exp-desc">Executive sponsor for Ford's Parts Optimization AI transformation. Leading modernization of aftermarket pricing with AI-driven pricing intelligence and competitive analytics. Principal architect of Ford's emerging Unified Data Platform across the commercial ecosystem.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">02/2023 – 06/2025</div><div class="exp-company ford">FORD PRO</div></div>
+        <div class="exp-body">
+          <div class="exp-role">Director, Ford Pro Analytics &amp; AI</div>
+          <div class="exp-impact">★ Google-first stack · 10+ product teams</div>
+          <div class="exp-desc">Technical Delivery Executive for ProTech — leading autonomous teams delivering AI-enabled analytics platforms powering Ford Pro's commercial strategy. Architected cloud-native ecosystems with ML, predictive modeling, and real-time data pipelines. Delivered enterprise-grade APIs, intelligent applications, and executive dashboards.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">09/2016 – 02/2023</div><div class="exp-company other">SUITECX</div></div>
+        <div class="exp-body">
+          <div class="exp-role">VP, Customer Product Success</div>
+          <div class="exp-impact">★ Forrester Wave #1 · Acquired by QuestionPro</div>
+          <div class="exp-desc">Led enterprise client strategy and retention for a global CX SaaS platform with &gt;90% satisfaction. Owned product roadmap alignment with CTO. Advised Fortune 500 clients including Microsoft, Ford, Dexcom, and Delta Dental on data strategy, VOC analytics, and customer journey modeling.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">2012 – present</div><div class="exp-company consulting">P3RSUIT</div></div>
+        <div class="exp-body">
+          <div class="exp-role">Founder &amp; Owner</div>
+          <div class="exp-impact purple">◈ Founded 2012 · Enabling small businesses</div>
+          <div class="exp-desc">P3rsuit provides technical solutions to enable small businesses — offering the talent of a full-service agency at a fraction of the cost. Services span consulting, website design &amp; social marketing, search engine optimization, business architecture, analytics, API integrations, and data management. A team of two with deep roots in Detroit's data and digital scene since the 90s, leaving a trail of happy clients behind.</div>
+          <div class="service-pills">
+            <span class="pill">consulting</span><span class="pill">web design</span><span class="pill">SEO</span>
+            <span class="pill">analytics</span><span class="pill">API integrations</span><span class="pill">data management</span>
+            <span class="pill">business architecture</span><span class="pill">social marketing</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">04/2010 – 08/2016</div><div class="exp-company other">MRM//McCANN</div></div>
+        <div class="exp-body">
+          <div class="exp-role">VP &amp; Engagement Director, Marketing Tech</div>
+          <div class="exp-impact">★ Gartner best-in-class · $4M+ P&amp;L · GM &amp; ExxonMobil</div>
+          <div class="exp-desc">Architected multinational data and analytics transformations across North America, Europe, and Asia. Led cross-continental teams (Detroit, New York, Hong Kong) building platforms integrating 60+ global data sources for 100+ stakeholders.</div>
+          <div class="case-studies">
+            <div class="case-card">
+              <div class="case-client">General Motors</div>
+              <div class="case-title">Customer Data Modeling</div>
+              <div class="case-result">Built a single consolidated definition of the GM customer with a global conceptual data model and business rules. Became the source of truth for all Data 360 integration projects — considered a breakthrough in how GM understands their customer.</div>
+              <span class="case-badge">Gartner recognized</span>
+            </div>
+            <div class="case-card">
+              <div class="case-client">General Motors</div>
+              <div class="case-title">Business Process Modeling</div>
+              <div class="case-result">Interviewed 30+ stakeholders to produce 10 validated business process diagrams and a pain point analysis of the vehicle configuration process end-to-end. Surfaced 30+ documented pain points for executive prioritization.</div>
+              <span class="case-badge">Best-in-class · Gartner</span>
+            </div>
+            <div class="case-card">
+              <div class="case-client">ExxonMobil &amp; General Motors</div>
+              <div class="case-title">Cross-Channel Dashboard Reporting</div>
+              <div class="case-result">Built a custom database and secure dashboard for ExxonMobil's global sales metrics across Asia, Europe, Russia, and the US. GM commissioned the same — scaling to 100+ daily API calls and weekly Tableau reporting. Still active 10+ years later.</div>
+              <span class="case-badge">Active 10+ years</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item fade-in">
+      <div class="exp-header">
+        <div class="exp-meta-col"><div class="exp-date">03/2005 – 11/2008</div><div class="exp-company other">DIGITAS</div></div>
+        <div class="exp-body">
+          <div class="exp-role">Technology Manager, GM Global CRM</div>
+          <div class="exp-impact">★ Top 5 Digitas achievement · Still in production</div>
+          <div class="exp-desc">Partnered with GM's Global CRM leadership to architect foundational IT infrastructure for BRIC market expansion.</div>
+          <div class="case-studies">
+            <div class="case-card">
+              <div class="case-client">General Motors</div>
+              <div class="case-title">Incentives Rules Engine &amp; Web Services</div>
+              <div class="case-result">Designed and delivered a custom API-driven Incentives Rules Engine publishing real-time offers across all GM brand websites. Architected SQL database and pricing logic for the GM Red Tag Event, enabling dynamic national price reduction and automated VIN-level window sticker updates. Named one of Digitas' top five accomplishments in 2008 — still in production nearly two decades later.</div>
+              <span class="case-badge">~20 years in production</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="certs">
+    <div class="section-header"><span class="section-label">// certifications</span><div class="section-line"></div></div>
+    <div class="certs-grid">
+      <div class="cert-card fade-in"><div class="cert-issuer">Google</div><div class="cert-name">Generative AI Leader</div><div class="cert-status cert-active">● active until Oct 2028</div></div>
+      <div class="cert-card fade-in"><div class="cert-issuer">Google Cloud</div><div class="cert-name">Machine Learning (ML)</div><div class="cert-status cert-active">● active</div></div>
+      <div class="cert-card fade-in"><div class="cert-issuer">Google</div><div class="cert-name">Cloud Digital Leader</div><div class="cert-status cert-active">● active until Aug 2026</div></div>
+      <div class="cert-card fade-in"><div class="cert-issuer">Cisco</div><div class="cert-name">CCNA: Intro to Networks</div><div class="cert-status cert-active">● non-expiring</div></div>
+      <div class="cert-card fade-in"><div class="cert-issuer">MIT Executive Education</div><div class="cert-name">AI: Implications for Business Strategy</div><div class="cert-status cert-progress">◐ in progress · May 2026</div></div>
+      <div class="cert-card fade-in"><div class="cert-issuer">PMI</div><div class="cert-name">Project Management Professional (PMP)</div><div class="cert-status cert-expired">○ ID: 1239365</div></div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-header"><span class="section-label">// skills</span><div class="section-line"></div></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-name">Cloud &amp; AI Strategy</div>
+        <div class="skill-item">Google Cloud Platform (GCP)</div>
+        <div class="skill-item">Vertex AI &amp; GenAI integration</div>
+        <div class="skill-item">Cloud-native platform strategy</div>
+        <div class="skill-item">Infrastructure as Code (Terraform)</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Data &amp; Analytics</div>
+        <div class="skill-item">BigQuery data warehousing</div>
+        <div class="skill-item">ELT / streaming pipelines</div>
+        <div class="skill-item">Predictive &amp; real-time analytics</div>
+        <div class="skill-item">Enterprise data architecture</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">CX &amp; Product</div>
+        <div class="skill-item">Customer journey mapping</div>
+        <div class="skill-item">VOC analytics &amp; experience audits</div>
+        <div class="skill-item">Digital product strategy</div>
+        <div class="skill-item">SaaS platform consulting</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">BI &amp; Visualization</div>
+        <div class="skill-item">Tableau / Power BI / Qlik</div>
+        <div class="skill-item">MicroStrategy / Business Objects</div>
+        <div class="skill-item">KPI design &amp; exec dashboards</div>
+        <div class="skill-item">SQL / BigQuery SQL</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-name">Leadership &amp; Delivery</div>
+        <div class="skill-item">Agile / Kanban product models</div>
+        <div class="skill-item">10+ cross-functional teams</div>
+        <div class="skill-item">P&amp;L &amp; program governance</div>
+        <div class="skill-item">C-suite stakeholder alignment</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-header"><span class="section-label">// education</span><div class="section-line"></div></div>
+    <div class="edu-grid">
+      <div class="edu-card fade-in"><div class="edu-school">Liberty University · In Progress</div><div class="edu-degree">MA, Executive Leadership</div><div class="edu-detail">4.0 GPA · 06/2025 – present</div></div>
+      <div class="edu-card fade-in"><div class="edu-school">University of Michigan</div><div class="edu-degree">BGS · Business, Literature, Science &amp; Arts</div><div class="edu-detail">Ann Arbor · 12/1999</div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-header"><span class="section-label">// contact</span><div class="section-line"></div></div>
+    <p style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);margin-bottom:1.5rem;">&gt; open to strategic advisory, board, and executive leadership conversations_</p>
+    <div class="contact-grid">
+      <a class="contact-btn primary" href="mailto:jstjoh11@ford.com">✉ jstjoh11@ford.com</a>
+      <a class="contact-btn" href="https://www.linkedin.com/in/juliestjohn/" target="_blank">⌥ linkedin</a>
+      <a class="contact-btn" href="https://www.credly.com/users/julie-st-john/badges#credly" target="_blank">◈ credly badges</a>
+      <a class="contact-btn" href="http://www.p3rsuit.com/" target="_blank">◈ p3rsuit.com</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 Julie St. John · Enterprise Data &amp; AI · P3rsuit LLC</span>
+    <span class="uptime"><span class="dot"></span>20+ years in production</span>
+  </div>
+</footer>
+</body>
+</html>
