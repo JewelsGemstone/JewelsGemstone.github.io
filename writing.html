@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Julie St. John · Writing & Publications</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #080b10; --bg2: #0d1117; --bg3: #131920;
+    --border: #1e2d3d; --accent: #38bdf8; --accent2: #34d399;
+    --accent3: #fb923c; --gold: #fbbf24; --purple: #a78bfa;
+    --text: #e2eaf4; --muted: #5a7a90; --subtle: #2a3d50;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; line-height: 1.65; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(56,189,248,0.012) 3px, rgba(56,189,248,0.012) 4px); pointer-events: none; z-index: 0; }
+
+  nav { border-bottom: 1px solid var(--border); background: rgba(8,11,16,0.96); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 960px; margin: 0 auto; padding: 0.85rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent); letter-spacing: 0.04em; text-decoration: none; }
+  .nav-logo span { color: var(--muted); }
+  .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .nav-links a { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.1em; cursor: pointer; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+
+  .hero { padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border); }
+  .hero-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent2); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.6rem; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent2); }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.08; margin-bottom: 0.5rem; }
+  .hero h1 .accent { color: var(--accent); }
+  .hero-sub { font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--muted); margin-bottom: 1.5rem; letter-spacing: 0.03em; }
+  .hero-bio { font-size: 14px; color: var(--muted); max-width: 600px; line-height: 1.7; }
+
+  section { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+
+  /* FEATURED PAPER */
+  .featured-paper { border: 1px solid var(--border); background: var(--bg2); padding: 2rem; position: relative; overflow: hidden; margin-bottom: 2rem; }
+  .featured-paper::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: var(--accent); }
+  .paper-source { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .paper-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.4rem; line-height: 1.3; }
+  .paper-meta { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 1rem; }
+  .paper-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.2rem; }
+  .tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--subtle); border: 1px solid var(--border); padding: 2px 8px; border-radius: 2px; letter-spacing: 0.05em; }
+  .tag.highlight { color: var(--accent2); border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.06); }
+
+  /* SECTIONS GRID */
+  .sections-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 2rem; }
+  .section-card { background: var(--bg2); padding: 1.4rem; position: relative; overflow: hidden; transition: background 0.2s; cursor: default; }
+  .section-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+  .section-card:hover { background: var(--bg3); }
+  .section-card:hover::before { transform: scaleX(1); }
+  .section-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+  .section-name { font-size: 13px; font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+  .section-excerpt { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .section-badge { display: inline-block; margin-top: 0.6rem; font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--gold); background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.2); padding: 2px 7px; border-radius: 2px; }
+
+  /* CONTEXT BLOCK */
+  .context-block { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .context-card { background: var(--bg2); border: 1px solid var(--border); padding: 1.2rem 1.3rem; border-radius: 2px; }
+  .context-label { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .context-value { font-size: 13px; font-weight: 600; margin-bottom: 0.2rem; }
+  .context-detail { font-size: 12px; color: var(--muted); }
+
+  /* BACK LINK */
+  .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; transition: color 0.2s; margin-bottom: 2rem; display: block; padding-top: 1.5rem; }
+  .back-link:hover { color: var(--accent); }
+
+  footer { padding: 1.8rem 0; border-top: 1px solid var(--border); }
+  .footer-inner { max-width: 960px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .uptime { display: flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent2); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(52,211,153,0.4)} 50%{opacity:.8;box-shadow:0 0 0 4px rgba(52,211,153,0)} }
+
+  .fade-in { opacity:0; transform:translateY(12px); animation:fadeIn 0.45s forwards; }
+  @keyframes fadeIn { to{opacity:1;transform:translateY(0)} }
+  .fade-in:nth-child(1){animation-delay:.05s} .fade-in:nth-child(2){animation-delay:.1s}
+  .fade-in:nth-child(3){animation-delay:.15s} .fade-in:nth-child(4){animation-delay:.2s}
+
+  @media (max-width: 600px) { .nav-links { gap: 1rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><span>~/</span>julie-st-john</a>
+    <div class="nav-links">
+      <a href="index.html">portfolio</a>
+      <a href="writing.html" class="active">writing</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <a class="back-link" href="index.html">← back to portfolio</a>
+
+  <div class="hero">
+    <div class="hero-eyebrow">Technical Writing &amp; Academic Publications</div>
+    <h1>Writing &amp; <span class="accent">Research</span></h1>
+    <div class="hero-sub">MIT Executive Education · AI Strategy &amp; Business Transformation</div>
+    <div class="hero-bio">Academic work exploring the strategic application of artificial intelligence in enterprise environments — with a focus on Ford Motor Company's data modernization and AI transformation initiatives.</div>
+  </div>
+
+  <!-- CONTEXT -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">// program context</span>
+      <div class="section-line"></div>
+    </div>
+    <div class="context-block">
+      <div class="context-card fade-in">
+        <div class="context-label">Institution</div>
+        <div class="context-value">MIT Executive Education</div>
+        <div class="context-detail">via GetSmarter</div>
+      </div>
+      <div class="context-card fade-in">
+        <div class="context-label">Program</div>
+        <div class="context-value">AI: Implications for Business Strategy</div>
+        <div class="context-detail">In progress · 2026</div>
+      </div>
+      <div class="context-card fade-in">
+        <div class="context-label">Focus Organization</div>
+        <div class="context-value">Ford Motor Company</div>
+        <div class="context-detail">Customer Service Division (FCSD)</div>
+      </div>
+      <div class="context-card fade-in">
+        <div class="context-label">Status</div>
+        <div class="context-value">Active Enrollment</div>
+        <div class="context-detail">Module 6 of 6</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PAPER -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">// featured paper</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="featured-paper fade-in">
+      <div class="paper-source">MIT · Module 6 Unit 2 · Final Assignment</div>
+      <div class="paper-title">AI Roadmap for Strategic Competitive Advantage: Ford Motor Company Customer Service Division</div>
+      <div class="paper-meta">Julie St. John · 2026 · MIT AI: Implications for Business Strategy</div>
+      <div class="paper-tags">
+        <span class="tag highlight">AI Strategy</span>
+        <span class="tag highlight">Enterprise Transformation</span>
+        <span class="tag">Ford FCSD</span>
+        <span class="tag">Google Cloud</span>
+        <span class="tag">Vertex AI</span>
+        <span class="tag">Porter's Strategies</span>
+        <span class="tag">Parts Pricing</span>
+        <span class="tag">Predictive Analytics</span>
+        <span class="tag">Agentic AI</span>
+      </div>
+      <div class="paper-source" style="color:var(--muted); margin-bottom: 0.5rem;">Abstract</div>
+      <div style="font-size:13px; color:var(--muted); line-height:1.7;">
+        This paper presents a strategic AI roadmap for Ford Motor Company's Customer Service Division (FCSD), a business unit responsible for post-purchase experiences across a $30–40B annual parts and services ecosystem. The roadmap addresses Ford's fragmented data platform landscape and proposes a consolidated, semantic-enriched, AI-ready data platform to enable scalable AI experiences across customers, dealers, and technicians. The initiative focuses on three primary AI capabilities: predictive vehicle health monitoring, dynamic parts pricing powered by elasticity and competitive intelligence, and agentic analytics delivered via chatbot and semantic layer access. Built on a Google Cloud-first stack with Vertex AI, BigQuery, Neo4j graph databases, and Terraform infrastructure-as-code, the platform is designed for API-first interoperability and third-party dealer CRM integration. The roadmap maps AI investment to Porter's competitive strategies — primarily differentiation through enhanced experience, secondarily cost leadership through automation and demand forecasting, with a focus strategy applied to high-value commercial fleet segments.
+      </div>
+    </div>
+
+    <!-- SECTIONS BREAKDOWN -->
+    <div class="sections-grid">
+      <div class="section-card fade-in">
+        <div class="section-num">SECTION 01</div>
+        <div class="section-name">Executive Summary</div>
+        <div class="section-excerpt">Vision for a consolidated, enterprise-grade data platform enabling AI-driven experiences across FCSD. Maps initiative to differentiation, cost leadership, and focus strategies using Porter's framework.</div>
+        <span class="section-badge">500 words</span>
+      </div>
+      <div class="section-card fade-in">
+        <div class="section-num">SECTION 02</div>
+        <div class="section-name">Current State Analysis</div>
+        <div class="section-excerpt">Assessment of Ford's siloed operating model, fragmented data maturity across 8+ divisions, and inconsistent Google Cloud adoption. Identifies competitive positioning across differentiation, cost leadership, and focus strategies.</div>
+        <span class="section-badge">500 words</span>
+      </div>
+      <div class="section-card fade-in">
+        <div class="section-num">SECTION 03</div>
+        <div class="section-name">Proposed AI Initiative</div>
+        <div class="section-excerpt">Parts pricing optimization via ML and price elasticity modeling. Dealer CRM API integrations. Semantic data platform on Google Cloud with RAG, vector embeddings, and graph databases (Neo4j). Agentic AI via grounded chatbot experiences.</div>
+        <span class="section-badge">800 words</span>
+      </div>
+      <div class="section-card fade-in">
+        <div class="section-num">SECTION 04</div>
+        <div class="section-name">Plan of Action &amp; Success Criteria</div>
+        <div class="section-excerpt">Kanban-governed delivery across discovery (complete April), initial release (through June), and full implementation (July–December 2026). Dual-track roadmap: platform operations and continuous innovation through 2029.</div>
+        <span class="section-badge">800 words</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORE COMING -->
+  <section>
+    <div class="section-header">
+      <span class="section-label">// more publications</span>
+      <div class="section-line"></div>
+    </div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--muted); padding: 2rem; border: 1px dashed var(--border); text-align:center; border-radius:2px;">
+      &gt; additional papers and modules to be added as program progresses_
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">© 2026 Julie St. John · Technical Writing &amp; Research</span>
+    <span class="uptime"><span class="dot"></span>MIT AI Program · In Progress</span>
+  </div>
+</footer>
+
+</body>
+</html>
